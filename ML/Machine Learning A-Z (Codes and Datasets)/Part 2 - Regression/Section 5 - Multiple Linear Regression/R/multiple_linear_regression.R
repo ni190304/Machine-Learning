@@ -26,3 +26,27 @@ regressor = lm(formula = Profit ~ .,
 
 # Predicting the Test set results
 y_pred = predict(regressor, newdata = test_set)
+
+# Using Backward Elimination
+
+regressor = lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend + State  ,
+               data = dataset)
+summary(regressor)
+
+# Removed State , High p - value
+
+regressor = lm(formula = Profit ~ R.D.Spend + Administration + Marketing.Spend  ,
+               data = dataset)
+summary(regressor)
+
+# Removed Administration , High p - value
+
+regressor = lm(formula = Profit ~ R.D.Spend + Marketing.Spend  ,
+               data = dataset)
+summary(regressor)
+
+# Removed Marketing.Spend , High p - value
+
+regressor = lm(formula = Profit ~ R.D.Spend  ,
+               data = dataset)
+summary(regressor)
