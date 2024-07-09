@@ -1,4 +1,4 @@
-# Polynomial Regression
+# Regression Template
 
 # Importing the dataset
 dataset = read.csv('Position_Salaries.csv')
@@ -16,44 +16,31 @@ dataset = dataset[2:3]
 # training_set = scale(training_set)
 # test_set = scale(test_set)
 
-# Fitting linear reg
-lin_reg = lm(formula = Salary ~ ., 
-             data = dataset)
-
 # Fitting poly reg
-dataset$Level2 = dataset$Level^2
-dataset$Level3 = dataset$Level^3
-dataset$Level4 = dataset$Level^4
+# Create regressor
 
-poly_reg = lm(formula = Salary ~ .,
-              data = dataset)
+# Predicting a new result with L.R
+
+y_pred = predict(lin_reg , data.frame(Level = 6.5))
 
 # Visualizing Lin Reg.
 
 library(ggplot2)
 ggplot()+
   geom_point(aes(x= dataset$Level, y = dataset$Salary), colour = 'red')+
-  geom_line(aes(x= dataset$Level, y = predict(lin_reg, newdata = dataset)), colour = 'blue')+
-  ggtitle('Truth of Bluff(LR)')+
+  geom_line(aes(x= dataset$Level, y = predict(regressor, newdata = dataset)), colour = 'blue')+
+  ggtitle('Truth of Bluff(Regression Model)')+
   xlab('Level')+
   ylab('Salary')
 
 # Visualizing Poly Reg.
 
 library(ggplot2)
+x_grid = seq(min(dataset$Level), max(dataset$Level), 0.1)
 ggplot()+
   geom_point(aes(x= dataset$Level, y = dataset$Salary), colour = 'red')+
-  geom_line(aes(x= dataset$Level, y = predict(poly_reg, newdata = dataset)), colour = 'blue')+
+  geom_line(aes(x= dataset$Level, y = predict(poly_reg, newdata = data.frame(Level = x_grid))), colour = 'blue')+
   ggtitle('Truth of Bluff(Poly_R)')+
   xlab('Level')+
   ylab('Salary')
 
-# Predicting a new result with L.R
-
-y_pred = predict(lin_reg , data.frame(Level = 6.5))
-y_pred
-
-# Predicting a new result with Poly.R
-
-y_pred = predict(poly_reg , data.frame(Level = 6.5, Level2 = 6.5^2, Level3 = 6.5^3, Level4 = 6.5^4))
-y_pred
